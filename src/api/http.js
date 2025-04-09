@@ -2,7 +2,7 @@ import axios from 'axios'
 import useUtils from '@u'
 const VITE_API_URL = import.meta.env.VITE_API_URL
 const TIMEOUT = 30000
-const utils = await useUtils()
+const utils = useUtils()
 // 创建Axios实例
 const instance = axios.create({
   timeout: TIMEOUT,
@@ -206,8 +206,8 @@ const http = (config) => {
           headers['Content-Type'] = 'multipart/form-data'
           if (utils.isNeObj(data)) {
             const formData = new FormData()
-            Object.keys(data).forEach((key) => {
-              formData.append(key, data[key])
+            Object.entries(data).forEach(([key, value]) => {
+              formData.append(key, value)
             })
             // for (const pair of formData.entries()) {
             //   console.log(pair[0] + ', ' + pair[1])
