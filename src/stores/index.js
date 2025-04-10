@@ -1,6 +1,7 @@
 import { createPinia } from 'pinia'
-import useUserInfo from './modules/userInfo'
-import useProjectInfo from './modules/projectInfo'
+import useUserInfo from './modules/UserInfo'
+import useProjectInfo from './modules/ProjectInfo'
+
 const pinia = createPinia()
 // https://blog.csdn.net/Pro_er/article/details/146137241
 // 持久化插件
