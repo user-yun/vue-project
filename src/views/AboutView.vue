@@ -1,9 +1,10 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
-    <WelcomeItem> aboutaboutaboutaboutaboutaboutWelcomeItemWelcomeItem </WelcomeItem>
+    <h1 @click="projectInfo.clearProjectInfo">This is an about page</h1>
+    <pre>{{ projectInfo.getProjectInfo }}</pre>
   </div>
 </template>
 <script setup>
-import WelcomeItem from '../components/WelcomeItem.vue'
+import { useProjectInfo } from '@s'
+const projectInfo = useProjectInfo()
 </script>

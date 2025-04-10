@@ -28,6 +28,7 @@ export default defineConfig(async ({ command, mode }) => {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
         '@u': fileURLToPath(new URL('./src/utils', import.meta.url)),
         '@a': fileURLToPath(new URL('./src/api', import.meta.url)),
+        '@s': fileURLToPath(new URL('./src/stores', import.meta.url)),
       },
       // 配置导入时，可以忽略的的扩展名列表，不建议忽略自定义导入类型的扩展名 .vue ，会影响 IDE 和类型支持
       extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json'],

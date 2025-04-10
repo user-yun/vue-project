@@ -12,6 +12,10 @@ export default defineStore('user-info', () => {
       })
     }
   }
-
-  return { userInfo, getUserInfo, setUserInfo }
+  const clearUserInfo = () => {
+    for (let key in userInfo) {
+      delete userInfo[key]
+    }
+  }
+  return { userInfo, getUserInfo, setUserInfo, clearUserInfo }
 })
