@@ -1,4 +1,4 @@
-import './assets/main.css'
+import './assets/main.less'
 
 import { createApp } from 'vue'
 // import { httpInstall } from '@a/http'

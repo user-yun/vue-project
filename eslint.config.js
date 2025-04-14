@@ -17,4 +17,7 @@ export default [
   ...pluginVue.configs['flat/essential'],
   skipFormatting,
   { languageOptions: { globals: { process: true } } },
+  {
+    'vue/multi-word-component-names': 'off',
+  },
 ]
