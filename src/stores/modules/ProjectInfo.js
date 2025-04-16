@@ -6,9 +6,7 @@ export default defineStore('project-info', () => {
   const projectInfo = reactive({})
   const getProjectInfo = computed(() => projectInfo)
   const setProjectInfo = (params) => {
-    console.log(123)
     if (utils.isNeObj(params)) {
-      console.log(123)
       Object.entries(params).forEach(([key, value]) => {
         projectInfo[key] = value
       })

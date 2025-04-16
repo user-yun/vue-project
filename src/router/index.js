@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { AsyncComp } from './utils'
-import HomeView from '../views/HomeView.vue'
+import { AsyncComp, beforeEach } from './utils'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,12 +7,22 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: AsyncComp(() => import('@v/default/login/index.vue')),
+      component: AsyncComp(() => import(/* webpackChunkName: "login" */ '@v/default/login/index.vue')),
+    },
+    {
+      path: '/loading',
+      name: 'loading',
+      component: AsyncComp(() => import(/* webpackChunkName: "loading" */ '@v/default/transition/Loading.vue')),
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'error',
+      component: AsyncComp(() => import(/* webpackChunkName: "pathMatch" */ '@v/default/transition/Error.vue')),
     },
     {
       path: '/',
       name: 'home',
-      component: HomeView,
+      component: AsyncComp(() => import('../views/HomeView.vue')),
     },
     {
       path: '/about',
@@ -24,6 +33,27 @@ const router = createRouter({
       component: AsyncComp(() => import('../views/AboutView.vue')),
     },
   ],
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { top: 0, behavior: 'smooth' }
+    }
+  },
 })
+// import { useRouter, useRoute } from 'vue-router'
 
+// const router = useRouter()
+// const route = useRoute()
+
+// function pushWithQuery(query) {
+//   router.push({
+//     name: 'search',
+//     query: {
+//       ...route.query,
+//       ...query,
+//     },
+//   })
+// }
+beforeEach(router)
 export default router

@@ -191,7 +191,7 @@ select:-webkit-autofill {
   background-repeat: no-repeat;
   background-position: bottom right;
 }
-div {
+#app {
   width: 100%;
   height: 100%;
 }
