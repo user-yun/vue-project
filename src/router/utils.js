@@ -1,4 +1,6 @@
 import { defineAsyncComponent } from 'vue'
+import { useUserInfo, useProjectInfo } from '@s'
+// 异步加载组件
 const AsyncComp = (loader) => {
   return defineAsyncComponent({
     // 加载函数
@@ -14,14 +16,16 @@ const AsyncComp = (loader) => {
     timeout: 3000,
   })
 }
+// 是否第一次加载路由
 let loadRoute = false
+// 加载所有文件的路由
 const loadModulesRoute = async (router) => {
   // 异步引入文件夹下所有.js 文件
   const modules = import.meta.glob(['./modules/*.js'], {
     import: 'default',
-    eager: true,
+    eager: false,
   })
-  let eager = true
+  let eager = false
   let length = Object.keys(modules).length
   let useRoute = []
   const loadModules = () => {
@@ -41,14 +45,27 @@ const loadModulesRoute = async (router) => {
   }
   if (eager) asyncModules()
   else await loadModules()
+  useRoute = await loadAuthMenu(useRoute)
   useRoute.forEach((ur) => {
     router.addRoute(ur)
   })
+
   loadRoute = true
 }
+// 递归处理路由信息
+const recursionHandle = (routes) => {}
+// 模拟加载权限菜单
+const loadAuthMenu = (useRoute) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(useRoute)
+    }, 3000 * 0)
+  })
+}
+// 路由拦截守卫
 const beforeEach = async (router) => {
   router.beforeEach(async (to, from, next) => {
-    console.log(to)
+    console.log('utils.js', to)
     if (loadRoute) next()
     else {
       await loadModulesRoute(router)

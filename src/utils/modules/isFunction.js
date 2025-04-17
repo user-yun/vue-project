@@ -10,7 +10,17 @@ export const isNeObj = (obj) => {
 }
 // 判断数组数据是否为有效数组，有数组长度的，不是[]
 export const isNeArr = (arr) => {
-  if (getDataType(arr) === 'Array') return arr.length > 0
+  // if (getDataType(arr) === 'Array') return arr.length > 0
+  if (Array.isArray(arr)) return arr.length > 0
   return false
 }
-export default { isNe, isNeObj, isNeArr }
+// 判断是否是对象
+export const isObj = (obj) => {
+  return getDataType(obj) === 'Object'
+}
+// 判断是否是数组
+export const isArr = (arr) => {
+  // return getDataType(arr) === 'Array'
+  return Array.isArray(arr)
+}
+export default { isNe, isNeObj, isNeArr, isObj, isArr }

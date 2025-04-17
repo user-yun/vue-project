@@ -6,7 +6,6 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
-
 export default defineConfig(async ({ command, mode }) => {
   console.log(`当前运行情况command：${command}，mode：${mode}`)
   let root = process.cwd() //获取当前工作目录的路径
@@ -33,6 +32,16 @@ export default defineConfig(async ({ command, mode }) => {
       },
       // 配置导入时，可以忽略的的扩展名列表，不建议忽略自定义导入类型的扩展名 .vue ，会影响 IDE 和类型支持
       extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json'],
+    },
+    css: {
+      preprocessorOptions: {
+        less: {
+          modifyVars: {
+            hack: `true; @import "@/assets/main.less";`,
+          },
+          javascriptEnabled: true,
+        },
+      },
     },
     // 开发服务器的配置
     server: {

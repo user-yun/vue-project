@@ -4,8 +4,8 @@ import { AsyncComp } from '../utils'
 export default () => {
   return [
     {
-      path: '/demo',
-      name: 'demo',
+      path: '/demo1path',
+      name: 'demo1path',
       redirect: '/demo1',
       component: AsyncComp(() => import(/* webpackChunkName: "demo" */ '@v/layout/index.vue')),
       children: [

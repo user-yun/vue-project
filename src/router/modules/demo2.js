@@ -4,8 +4,8 @@ import { RouterView } from 'vue-router'
 export default () => {
   return [
     {
-      path: '/demo22',
-      name: 'demo22',
+      path: '/demo2path',
+      name: 'demo2path',
       redirect: '/demo3',
       component: AsyncComp(() => import(/* webpackChunkName: "demo2" */ '@v/layout/index.vue')),
       children: [
@@ -15,8 +15,8 @@ export default () => {
           component: AsyncComp(() => import(/* webpackChunkName: "demo2" */ '@v/demo/demo3/index.vue')),
         },
         {
-          path: '/demo44',
-          name: 'demo44',
+          path: '/demo4path',
+          name: 'demo4path',
           redirect: '/demo4',
           component: RouterView,
           children: [

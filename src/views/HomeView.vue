@@ -6,14 +6,10 @@ const utils = useUtils()
 const api = useApi()
 const userInfo = useUserInfo()
 const projectInfo = useProjectInfo()
-console.log(utils)
-console.log(api)
 setTimeout(() => {
   api.Test.testGet({ test: 123 })
   api.Test.testPost({ test: 1234 })
   api.Test.testForm({ test: 12345 })
-  console.log(utils.isNe())
-  console.log(utils.getDataType())
 }, 3000)
 const set = () => {
   userInfo.setUserInfo({
