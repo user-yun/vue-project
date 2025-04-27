@@ -8,10 +8,10 @@ let length = Object.keys(modules).length
 let useApi = {}
 const loadModules = () => {
   return new Promise((resolve) => {
-    const regex = /\.\/modules\/(\w+)\.js/
+    let regex = /\.\/modules\/(\w+)\.js/
     Object.entries(modules).forEach(([path, content], index) => {
       content().then((module) => {
-        const names = regex.exec(path)
+        let names = regex.exec(path)
         if (names?.[1]) useApi[names[1]] = module
         if (index === length - 1) resolve()
       })
@@ -19,9 +19,9 @@ const loadModules = () => {
   })
 }
 const asyncModules = () => {
-  const regex = /\.\/modules\/(\w+)\.js/
+  let regex = /\.\/modules\/(\w+)\.js/
   Object.entries(modules).forEach(([path, content]) => {
-    const names = regex.exec(path)
+    let names = regex.exec(path)
     if (names?.[1]) useApi[names[1]] = content
   })
 }

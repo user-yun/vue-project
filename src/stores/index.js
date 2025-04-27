@@ -7,7 +7,7 @@ const pinia = createPinia()
 // 持久化插件
 const piniaPluginPersistedState = ({ store }) => {
   // 从localStorage恢复状态
-  const savedState = localStorage.getItem(store.$id)
+  let savedState = localStorage.getItem(store.$id)
   if (savedState) {
     store.$patch(JSON.parse(savedState))
   }

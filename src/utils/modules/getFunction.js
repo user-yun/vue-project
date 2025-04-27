@@ -14,9 +14,9 @@ export const getDataType = (data) => {
   //   const type = getDataType(data)
   //   console.log(`数据类型: ${type}`)
   // })
-  const result = Object.prototype.toString.call(data)
-  const regex = /\[object (\w+)\]/
-  const match = regex.exec(result)
+  let result = Object.prototype.toString.call(data)
+  let regex = /\[object (\w+)\]/
+  let match = regex.exec(result)
   if (match) {
     return match[1]
   }
@@ -37,8 +37,8 @@ export const getFloatRandomInRange = (min, max, len = 2) => {
   // [min, max] = [Math.min(min, max), Math.max(min, max)];
   if (min > max) [min, max] = [max, min]
   // 添加极小的epsilon以确保包含max
-  const epsilon = Number.EPSILON || Math.pow(2, -52)
-  const range = max - min + epsilon
+  let epsilon = Number.EPSILON || Math.pow(2, -52)
+  let range = max - min + epsilon
   return String(Math.min(Math.random() * range + min, max)).substring(0, len + 2)
 }
 

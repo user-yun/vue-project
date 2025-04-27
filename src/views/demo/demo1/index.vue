@@ -1,11 +1,26 @@
 <template>
   <div class="demo1-main">
     <button @click="projectInfo.toggleDark()">demo1</button>
+    <home-outlined />
+    <setting-filled />
+    <smile-outlined />
+    <sync-outlined spin />
+    <smile-outlined :rotate="180" />
+    <loading-outlined />
+    <a-input placeholder="Basic usage" />
+    <div class="a20vh"></div>
+    <div class="a20vh"></div>
+    <div class="a20vh"></div>
+    <div class="a20vh"></div>
+    <div class="a20vh"></div>
+    <div class="a20vh"></div>
+    <div class="a20vh"></div>
   </div>
 </template>
 
 <script setup>
 import { useProjectInfo } from '@s'
+
 const projectInfo = useProjectInfo()
 console.log('demo1.vue', projectInfo.getThemeValue('--placeholder-color'))
 console.log('demo1.vue', projectInfo.getThemeValue('--webkit-background-color'))
@@ -14,6 +29,11 @@ console.log('demo1.vue', projectInfo.getThemeValue('--color'))
 
 <style lang="less" scoped>
 .demo1-main {
-  height: 100%;
+  .a20vh {
+    height: 20vh;
+    &:nth-child(2n) {
+      background: red;
+    }
+  }
 }
 </style>

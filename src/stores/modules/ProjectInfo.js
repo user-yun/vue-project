@@ -1,12 +1,12 @@
 import { reactive, computed, watch } from 'vue'
 import { defineStore } from 'pinia'
-import { theme } from 'ant-design-vue'
 import useUtils from '@u'
-const utils = useUtils()
 export default defineStore('project-info', () => {
+  const utils = useUtils()
   const projectInfo = reactive({
     // 默认非黑夜模式
     isDark: false,
+    menuItems: [],
   })
   // 监听如果刷新后解决深色模式切换问题
   watch(
@@ -17,7 +17,7 @@ export default defineStore('project-info', () => {
       if (isDark === document.documentElement.classList.contains('dark')) return
       document.documentElement.classList.toggle('dark')
     },
-    { deep: true, immediate: true, flush: 'post', once: true },
+    { deep: true, immediate: false, flush: 'post', once: true },
   )
 
   const getProjectInfo = computed(() => projectInfo)
@@ -33,16 +33,12 @@ export default defineStore('project-info', () => {
       delete projectInfo[key]
     }
   }
-  const getAlgorithm = computed(() => {
-    const { defaultAlgorithm, darkAlgorithm } = theme
-    return projectInfo.isDark ? darkAlgorithm : defaultAlgorithm
-  })
   const getThemeValue = (value) => {
     return getComputedStyle(document.documentElement).getPropertyValue(value)
   }
   const toggleDark = () => {
     // 执行切换主题的操作
-    const transition = document.startViewTransition(() => {
+    let transition = document.startViewTransition(() => {
       // 动画过渡切换主题色
       document.documentElement.classList.toggle('dark')
       setProjectInfo({
@@ -52,10 +48,10 @@ export default defineStore('project-info', () => {
     // document.startViewTransition 的 ready 返回一个 Promise
     transition.ready.then(() => {
       // 获取鼠标的坐标
-      // const { clientX, clientY } = e
-      const [clientX, clientY] = [utils.getRandomInRange(0, window.innerWidth), utils.getRandomInRange(0, window.innerHeight)]
+      // let { clientX, clientY } = e
+      let [clientX, clientY] = [utils.getRandomInRange(0, window.innerWidth), utils.getRandomInRange(0, window.innerHeight)]
       // 计算最大半径
-      const radius = Math.hypot(Math.max(clientX, innerWidth - clientX), Math.max(clientY, innerHeight - clientY))
+      let radius = Math.max(clientX, innerWidth - clientX, clientY, innerHeight - clientY)
       // 圆形动画扩散开始
       document.documentElement.animate(
         {
@@ -70,5 +66,5 @@ export default defineStore('project-info', () => {
     })
   }
 
-  return { projectInfo, getProjectInfo, setProjectInfo, clearProjectInfo, getAlgorithm, getThemeValue, toggleDark }
+  return { projectInfo, getProjectInfo, setProjectInfo, clearProjectInfo, getThemeValue, toggleDark }
 })

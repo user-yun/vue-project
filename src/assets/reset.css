@@ -18,6 +18,7 @@ body {
   font-size: 14px;
   font-style: normal;
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 /* 重置各标签的默认样式 */

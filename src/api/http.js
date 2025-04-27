@@ -2,7 +2,6 @@ import axios from 'axios'
 import useUtils from '@u'
 const VITE_API_URL = import.meta.env.VITE_API_URL
 const TIMEOUT = 30000
-const utils = useUtils()
 // 创建Axios实例
 const instance = axios.create({
   timeout: TIMEOUT,
@@ -195,6 +194,7 @@ const http = (config) => {
   let methodConvert = {
     form: 'post',
   }
+  let utils = useUtils()
   let defaultConfig = {
     // url: '/user',
     method: methodConvert[config.method] !== undefined ? methodConvert[config.method] : config.method,
@@ -205,7 +205,7 @@ const http = (config) => {
         if (config.method === 'form') {
           headers['Content-Type'] = 'multipart/form-data'
           if (utils.isNeObj(data)) {
-            const formData = new FormData()
+            let formData = new FormData()
             Object.entries(data).forEach(([key, value]) => {
               formData.append(key, value)
             })

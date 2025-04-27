@@ -1,8 +1,8 @@
 import { reactive, computed } from 'vue'
 import { defineStore } from 'pinia'
 import useUtils from '@u'
-const utils = useUtils()
 export default defineStore('user-info', () => {
+  const utils = useUtils()
   const userInfo = reactive({})
   const getUserInfo = computed(() => userInfo)
   const setUserInfo = (params) => {
