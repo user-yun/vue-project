@@ -9,7 +9,12 @@ const piniaPluginPersistedState = ({ store }) => {
   // 从localStorage恢复状态
   let savedState = localStorage.getItem(store.$id)
   if (savedState) {
-    store.$patch(JSON.parse(savedState))
+    let patchInfo = JSON.parse(savedState)
+    if (store.$id === 'project-info') {
+      // 处理个别值的初始值
+      patchInfo.projectInfo.loadRoute = true
+    }
+    store.$patch(patchInfo)
   }
   // 监听变化自动保存
   store.$subscribe((mutation, state) => {

@@ -8,6 +8,7 @@
     <smile-outlined :rotate="180" />
     <loading-outlined />
     <a-input placeholder="Basic usage" />
+    <component :is="'HomeOutlined'" />
     <div class="a20vh"></div>
     <div class="a20vh"></div>
     <div class="a20vh"></div>
@@ -19,6 +20,7 @@
 </template>
 
 <script setup>
+import { h } from 'vue'
 import { useProjectInfo } from '@s'
 
 const projectInfo = useProjectInfo()

@@ -6,6 +6,8 @@ export default defineStore('project-info', () => {
   const projectInfo = reactive({
     // 默认非黑夜模式
     isDark: false,
+    // 是否需要加载路由，一般在退出登录后需要重新设置为true
+    loadRoute: true,
     menuItems: [],
   })
   // 监听如果刷新后解决深色模式切换问题
@@ -49,13 +51,19 @@ export default defineStore('project-info', () => {
     transition.ready.then(() => {
       // 获取鼠标的坐标
       // let { clientX, clientY } = e
-      let [clientX, clientY] = [utils.getRandomInRange(0, window.innerWidth), utils.getRandomInRange(0, window.innerHeight)]
+      let [clientX, clientY] = [
+        utils.getRandomInRange(0, window.innerWidth),
+        utils.getRandomInRange(0, window.innerHeight),
+      ]
       // 计算最大半径
       let radius = Math.max(clientX, innerWidth - clientX, clientY, innerHeight - clientY)
       // 圆形动画扩散开始
       document.documentElement.animate(
         {
-          clipPath: [`circle(0% at ${clientX}px ${clientY}px)`, `circle(${radius}px at ${clientX}px ${clientY}px)`],
+          clipPath: [
+            `circle(0% at ${clientX}px ${clientY}px)`,
+            `circle(${radius}px at ${clientX}px ${clientY}px)`,
+          ],
         },
         // 设置时间，以及目标伪元素
         {
@@ -66,5 +74,12 @@ export default defineStore('project-info', () => {
     })
   }
 
-  return { projectInfo, getProjectInfo, setProjectInfo, clearProjectInfo, getThemeValue, toggleDark }
+  return {
+    projectInfo,
+    getProjectInfo,
+    setProjectInfo,
+    clearProjectInfo,
+    getThemeValue,
+    toggleDark,
+  }
 })

@@ -12,10 +12,11 @@ const aIconsInstall = () => {
   }
 }
 export { aIconsInstall }
-export default () => {
+export default (icon) => {
   // 返回展开所有的icon
   //   import AIcons from '@c/AIcons'
   //   console.log(AIcons())
+  if (icon) return AIcons[icon]
   return {
     ...AIcons,
   }

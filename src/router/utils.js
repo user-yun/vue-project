@@ -1,7 +1,8 @@
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent, h } from 'vue'
 import { useUserInfo, useProjectInfo } from '@s'
 import useUtils from '@u'
 import { routePaths } from './index.js'
+import AIcons from '@c/AIcons'
 // 异步加载组件
 const AsyncComp = (loader) => {
   return defineAsyncComponent({
@@ -18,8 +19,6 @@ const AsyncComp = (loader) => {
     timeout: 3000,
   })
 }
-// 是否第一次加载路由
-let loadRoute = false
 // 加载所有文件的路由
 const loadModulesRoute = async (router) => {
   // 异步引入文件夹下所有.js 文件
@@ -51,15 +50,14 @@ const loadModulesRoute = async (router) => {
   useRoute.forEach((ur) => {
     router.addRoute(ur)
   })
-
-  loadRoute = true
 }
 let utils = useUtils()
 // 递归处理路由信息
 const recursionHandle = (routes, authList) => {
   return routes.filter((route) => {
     let isAuth = authList.includes(route.path)
-    if (isAuth && utils.isNeArr(route.children)) route.children = recursionHandle(route.children, authList)
+    if (isAuth && utils.isNeArr(route.children))
+      route.children = recursionHandle(route.children, authList)
     return isAuth
   })
 }
@@ -68,7 +66,13 @@ const copyMenuItems = (routes) => {
   return routes.map((route) => {
     route = {
       ...route,
-      ...(utils.isNeObj(route.meta?.menu) ? route.meta.menu : {}),
+      ...(utils.isNeObj(route.meta?.menu)
+        ? {
+            ...route.meta.menu,
+            title: route.meta.menu.title || route.meta.menu.label,
+            icon: utils.isNe(route.meta?.menu?.icon) ? h(AIcons(route.meta.menu.icon)) : '',
+          }
+        : {}),
       key: route.path,
     }
     delete route.meta
@@ -79,7 +83,24 @@ const copyMenuItems = (routes) => {
 }
 // 模拟加载权限菜单
 const loadAuthMenu = (useRoute) => {
-  let authList = ['/demo1path', '/demo1', '/demo2', '/demo11path', '/demo2path', '/demo3', '/demo4path', '/demo4', '/demo5']
+  let userInfo = useUserInfo()
+  let token = userInfo.getUserInfo.token
+  let authList =
+    token === 'admin'
+      ? [
+          '/admin/group1',
+          '/admin/demo1',
+          '/admin/demo2',
+          '/admin/group2',
+          '/admin/demo3',
+          '/admin/demo4',
+          '/user/group1',
+          '/user/demo3',
+          '/user/group2',
+          '/user/demo4',
+          '/user/demo5',
+        ]
+      : ['/user/group1', '/user/demo3', '/user/group2', '/user/demo4', '/user/demo5']
   useRoute = recursionHandle(useRoute, authList)
   let projectInfo = useProjectInfo()
   projectInfo.setProjectInfo({
@@ -95,12 +116,28 @@ const loadAuthMenu = (useRoute) => {
 const beforeEach = async (router) => {
   router.beforeEach(async (to, from, next) => {
     // console.log(routePaths)
-    // console.log(to)
+    console.log(to)
     // console.log(routePaths.includes(to.path))
+    let userInfo = useUserInfo()
+    let projectInfo = useProjectInfo()
+    // 用户的token信息
+    let token = userInfo.getUserInfo.token
+    // 是否需要加载路由，一般在退出登录后需要重新设置为true
+    let loadRoute = projectInfo.getProjectInfo.loadRoute
     if (routePaths.includes(to.path)) next()
-    else if (loadRoute) next()
+    else if (!utils.isNe(token))
+      next({
+        path: '/login',
+        query: {
+          redirect: to.fullPath,
+        },
+      })
+    else if (!loadRoute) next()
     else {
       await loadModulesRoute(router)
+      projectInfo.setProjectInfo({
+        loadRoute: false,
+      })
       next(to.fullPath)
     }
   })

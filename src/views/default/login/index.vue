@@ -1,7 +1,13 @@
 <template>
   <div class="login-main">
     <div class="login-main_content">
-      <a-form layout="vertical" ref="formRef" :model="formReactive.formModel" :rules="formReactive.formRules" scrollToFirstError>
+      <a-form
+        layout="vertical"
+        ref="formRef"
+        :model="formReactive.formModel"
+        :rules="formReactive.formRules"
+        scrollToFirstError
+      >
         <a-form-item label="Username" name="username">
           <a-input v-model:value="formReactive.formModel.username" />
         </a-form-item>
@@ -9,7 +15,9 @@
           <a-input-password v-model:value="formReactive.formModel.password" />
         </a-form-item>
         <a-form-item>
-          <a-button type="primary" html-type="submit" block @click="formReactive.handleLogin">Login</a-button>
+          <a-button type="primary" html-type="submit" block @click="formReactive.handleLogin"
+            >Login</a-button
+          >
         </a-form-item>
       </a-form>
     </div>
@@ -19,6 +27,16 @@
 <script setup>
 import { reactive, ref } from 'vue'
 import { message } from 'ant-design-vue'
+import { useUserInfo, useProjectInfo } from '@s'
+import { useRouter, useRoute } from 'vue-router'
+import useUtils from '@u'
+let router = useRouter()
+let route = useRoute()
+let projectInfo = useProjectInfo()
+projectInfo.setProjectInfo({
+  loadRoute: true,
+  menuItems: [],
+})
 const defaultFormModel = {
   username: '',
   password: '',
@@ -33,6 +51,16 @@ const formReactive = reactive({
   handleLogin() {
     formReactive.handleValidate().then(() => {
       message.success('login')
+      let userInfo = useUserInfo()
+      userInfo.setUserInfo({
+        token: formReactive.formModel.username,
+      })
+
+      let utils = useUtils()
+      router.push({
+        // path: utils.isNe(route.query?.redirect) ? route.query.redirect : '/',
+        path: route.query?.redirect || '/',
+      })
     })
   },
   async handleValidate() {
@@ -55,7 +83,8 @@ const formReactive = reactive({
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #ff7e5f, #feb47b, #81ecec, #74b9ff), linear-gradient(45deg, #81ecec, #74b9ff, #ff7e5f, #feb47b);
+  background: linear-gradient(135deg, #ff7e5f, #feb47b, #81ecec, #74b9ff),
+    linear-gradient(45deg, #81ecec, #74b9ff, #ff7e5f, #feb47b);
   background-blend-mode: overlay; /* 或者使用其他混合模式如 'multiply', 'screen', 'overlay' 等 */
   &_content {
     width: 500px;
