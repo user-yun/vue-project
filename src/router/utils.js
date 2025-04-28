@@ -1,6 +1,7 @@
 import { defineAsyncComponent } from 'vue'
 import { useUserInfo, useProjectInfo } from '@s'
 import useUtils from '@u'
+import { routePaths } from './index.js'
 // 异步加载组件
 const AsyncComp = (loader) => {
   return defineAsyncComponent({
@@ -93,7 +94,11 @@ const loadAuthMenu = (useRoute) => {
 // 路由拦截守卫
 const beforeEach = async (router) => {
   router.beforeEach(async (to, from, next) => {
-    if (loadRoute) next()
+    // console.log(routePaths)
+    // console.log(to)
+    // console.log(routePaths.includes(to.path))
+    if (routePaths.includes(to.path)) next()
+    else if (loadRoute) next()
     else {
       await loadModulesRoute(router)
       next(to.fullPath)
