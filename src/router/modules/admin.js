@@ -1,6 +1,5 @@
 import { AsyncComp } from '../utils'
 // import { RouterView } from 'vue-router'
-// 中文
 export default () => {
   return [
     {
@@ -10,7 +9,7 @@ export default () => {
       component: AsyncComp(() => import(/* webpackChunkName: "admin" */ '@v/layout/index.vue')),
       meta: {
         menu: {
-          label: '管理员分组1',
+          label: 'adminGroup1',
           icon: 'HomeOutlined',
         },
       },
@@ -23,7 +22,7 @@ export default () => {
           ),
           meta: {
             menu: {
-              label: '测试页面1',
+              label: 'adminDemo1',
             },
           },
         },
@@ -35,7 +34,7 @@ export default () => {
           ),
           meta: {
             menu: {
-              label: '测试页面2',
+              label: 'adminDemo2',
             },
           },
         },
@@ -48,7 +47,7 @@ export default () => {
       component: AsyncComp(() => import(/* webpackChunkName: "admin" */ '@v/layout/index.vue')),
       meta: {
         menu: {
-          label: '管理员分组2',
+          label: 'adminGroup2',
         },
       },
       children: [
@@ -60,7 +59,7 @@ export default () => {
           ),
           meta: {
             menu: {
-              label: '测试页面3',
+              label: 'adminDemo3',
             },
           },
         },
@@ -72,7 +71,7 @@ export default () => {
           ),
           meta: {
             menu: {
-              label: '测试页面4',
+              label: 'adminDemo4',
             },
           },
         },

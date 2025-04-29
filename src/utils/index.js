@@ -1,3 +1,4 @@
+import { isNeObj } from './modules/isFunction'
 // 异步引入文件夹下所有.js 文件
 const modules = import.meta.glob(['./modules/*.js'], {
   import: 'default',
@@ -25,24 +26,35 @@ const utilsInstall = () => {
   return {
     install(Vue /**options**/) {
       if (eager) {
-        asyncModules()
-        Vue.config.globalProperties.$utils = useUtils
-      } else
-        loadModules().then(() => {
+        if (isNeObj(useUtils)) Vue.config.globalProperties.$utils = useUtils
+        else {
+          asyncModules()
           Vue.config.globalProperties.$utils = useUtils
-        })
+        }
+      } else {
+        if (isNeObj(useUtils)) Vue.config.globalProperties.$utils = useUtils
+        else
+          loadModules().then(() => {
+            Vue.config.globalProperties.$utils = useUtils
+          })
+      }
     },
   }
 }
 export { utilsInstall }
 export default () => {
   if (eager) {
-    asyncModules()
-    return useUtils
+    if (isNeObj(useUtils)) return useUtils
+    else {
+      asyncModules()
+      return useUtils
+    }
   } else
     return new Promise((resolve) => {
-      loadModules().then(() => {
-        resolve(useUtils)
-      })
+      if (isNeObj(useUtils)) resolve(useUtils)
+      else
+        loadModules().then(() => {
+          resolve(useUtils)
+        })
     })
 }

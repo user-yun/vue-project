@@ -8,6 +8,7 @@ export default defineStore('project-info', () => {
     isDark: false,
     // 是否需要加载路由，一般在退出登录后需要重新设置为true
     loadRoute: true,
+    lang: 'zh',
     menuItems: [],
   })
   // 监听如果刷新后解决深色模式切换问题

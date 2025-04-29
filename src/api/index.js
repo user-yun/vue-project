@@ -1,3 +1,4 @@
+import useUtils from '@u'
 // 异步引入文件夹下所有.js 文件
 const modules = import.meta.glob(['./modules/*.js'], {
   import: 'default',
@@ -25,30 +26,41 @@ const asyncModules = () => {
     if (names?.[1]) useApi[names[1]] = content
   })
 }
-
+let utils = useUtils()
 const apiInstall = () => {
   return {
     install(Vue /**options**/) {
       if (eager) {
-        asyncModules()
-        Vue.config.globalProperties.$api = useApi
-      } else
-        loadModules().then(() => {
+        if (utils.isNeObj(useApi)) Vue.config.globalProperties.$api = useApi
+        else {
+          asyncModules()
           Vue.config.globalProperties.$api = useApi
-        })
+        }
+      } else {
+        if (utils.isNeObj(useApi)) Vue.config.globalProperties.$api = useApi
+        else
+          loadModules().then(() => {
+            Vue.config.globalProperties.$api = useApi
+          })
+      }
     },
   }
 }
 export { apiInstall }
 export default () => {
   if (eager) {
-    asyncModules()
-    return useApi
+    if (utils.isNeObj(useApi)) return useApi
+    else {
+      asyncModules()
+      return useApi
+    }
   } else
     return new Promise((resolve) => {
-      loadModules().then(() => {
-        resolve(useApi)
-      })
+      if (utils.isNeObj(useApi)) resolve(useApi)
+      else
+        loadModules().then(() => {
+          resolve(useApi)
+        })
     })
 }
 

@@ -1,6 +1,5 @@
 import { AsyncComp } from '../utils'
 import { RouterView } from 'vue-router'
-// 中文
 export default () => {
   return [
     {
@@ -10,7 +9,7 @@ export default () => {
       component: AsyncComp(() => import(/* webpackChunkName: "user" */ '@v/layout/index.vue')),
       meta: {
         menu: {
-          label: '用户分组1',
+          label: 'userGroup1',
         },
       },
       children: [
@@ -22,7 +21,7 @@ export default () => {
           ),
           meta: {
             menu: {
-              label: '测试页面3',
+              label: 'userDemo3',
             },
           },
         },
@@ -33,7 +32,7 @@ export default () => {
           component: RouterView,
           meta: {
             menu: {
-              label: '用户分组2',
+              label: 'userGroup2',
             },
           },
           children: [
@@ -45,7 +44,7 @@ export default () => {
               ),
               meta: {
                 menu: {
-                  label: '测试页面4',
+                  label: 'userDemo4',
                 },
               },
             },
@@ -57,7 +56,7 @@ export default () => {
               ),
               meta: {
                 menu: {
-                  label: '测试页面5',
+                  label: 'userDemo5',
                 },
               },
             },
