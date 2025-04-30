@@ -1,12 +1,13 @@
 import { AsyncComp } from '../utils'
 // import { RouterView } from 'vue-router'
 export default () => {
+  const layout = AsyncComp(() => import(/* webpackChunkName: "admin" */ '@v/layout/index.vue'))
   return [
     {
       path: '/admin/group1',
       name: 'adminGroup1',
       redirect: '/admin/demo1',
-      component: AsyncComp(() => import(/* webpackChunkName: "admin" */ '@v/layout/index.vue')),
+      component: layout,
       meta: {
         menu: {
           label: 'adminGroup1',
@@ -44,7 +45,7 @@ export default () => {
       path: '/admin/group2',
       name: 'adminGroup2',
       redirect: '/admin/demo3',
-      component: AsyncComp(() => import(/* webpackChunkName: "admin" */ '@v/layout/index.vue')),
+      component: layout,
       meta: {
         menu: {
           label: 'adminGroup2',

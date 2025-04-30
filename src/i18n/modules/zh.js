@@ -11,5 +11,8 @@ export default {
     userGroup2: '用户分组2',
     userDemo4: '测试页面4',
     userDemo5: '测试页面5',
+    userDemo6: '测试页面6',
+    userDemo7: '测试页面7',
+    userDemo8: '测试页面8',
   },
 }

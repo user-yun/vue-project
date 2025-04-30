@@ -1,9 +1,7 @@
-import { defineAsyncComponent, h } from 'vue'
+import { defineAsyncComponent } from 'vue'
 import stores, { useUserInfo, useProjectInfo } from '@s'
 import useUtils from '@u'
 import { routePaths } from './index.js'
-import AIcons from '@c/AIcons'
-import i18n from '@i'
 // 异步加载组件
 const AsyncComp = (loader) => {
   return defineAsyncComponent({
@@ -64,16 +62,14 @@ const recursionHandle = (routes, authList) => {
 }
 // 递归处理菜单数据
 const copyMenuItems = (routes) => {
-  let { t } = i18n.global
   return routes.map((route) => {
     route = {
       ...route,
       ...(utils.isNeObj(route.meta?.menu)
         ? {
             ...route.meta.menu,
-            label: t(`menu.${route.meta.menu.label || route.meta.menu.title}`),
-            title: t(`menu.${route.meta.menu.title || route.meta.menu.label}`),
-            icon: utils.isNe(route.meta?.menu?.icon) ? h(AIcons(route.meta.menu.icon)) : '',
+            label: route.meta.menu.label || route.meta.menu.title,
+            title: route.meta.menu.title || route.meta.menu.label,
           }
         : {}),
       key: route.path,
@@ -102,6 +98,9 @@ const loadAuthMenu = (useRoute) => {
           '/user/group2',
           '/user/demo4',
           '/user/demo5',
+          '/user/demo6',
+          '/user/demo7',
+          '/user/demo8',
         ]
       : ['/user/group1', '/user/demo3', '/user/group2', '/user/demo4', '/user/demo5']
   useRoute = recursionHandle(useRoute, authList)
@@ -143,6 +142,11 @@ const beforeEach = async (router) => {
       })
       next(to.fullPath)
     }
+  })
+  router.onError((error) => {
+    console.error('路由监听到错误:', error)
+    // 可以在这里处理错误，例如重定向到错误页面
+    // router.replace('/error-page');
   })
 }
 // const rView = h('router-view')

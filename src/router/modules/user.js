@@ -1,12 +1,13 @@
 import { AsyncComp } from '../utils'
 import { RouterView } from 'vue-router'
 export default () => {
+  const layout = AsyncComp(() => import(/* webpackChunkName: "admin" */ '@v/layout/index.vue'))
   return [
     {
       path: '/user/group1',
       name: 'userGroup1',
-      redirect: '/user/demo3',
-      component: AsyncComp(() => import(/* webpackChunkName: "user" */ '@v/layout/index.vue')),
+      redirect: '/user/demo5',
+      component: layout,
       meta: {
         menu: {
           label: 'userGroup1',
@@ -14,21 +15,33 @@ export default () => {
       },
       children: [
         {
-          path: '/user/demo3',
-          name: 'userDemo3',
+          path: '/user/demo5',
+          name: 'userDemo5',
           component: AsyncComp(
-            () => import(/* webpackChunkName: "user" */ '@v/demo/demo3/index.vue'),
+            () => import(/* webpackChunkName: "user" */ '@v/demo/demo5/index.vue'),
           ),
           meta: {
             menu: {
-              label: 'userDemo3',
+              label: 'userDemo5',
+            },
+          },
+        },
+        {
+          path: '/user/demo8',
+          name: 'userDemo8',
+          component: AsyncComp(
+            () => import(/* webpackChunkName: "user" */ '@v/demo/demo8/index.vue'),
+          ),
+          meta: {
+            menu: {
+              label: 'userDemo8',
             },
           },
         },
         {
           path: '/user/group2',
           name: 'userGroup2',
-          redirect: '/user/demo4',
+          redirect: '/user/demo6',
           component: RouterView,
           meta: {
             menu: {
@@ -37,26 +50,26 @@ export default () => {
           },
           children: [
             {
-              path: '/user/demo4',
-              name: 'userDemo4',
+              path: '/user/demo6',
+              name: 'userDemo6',
               component: AsyncComp(
-                () => import(/* webpackChunkName: "user" */ '@v/demo/demo4/index.vue'),
+                () => import(/* webpackChunkName: "user" */ '@v/demo/demo6/index.vue'),
               ),
               meta: {
                 menu: {
-                  label: 'userDemo4',
+                  label: 'userDemo6',
                 },
               },
             },
             {
-              path: '/user/demo5',
-              name: 'userDemo5',
+              path: '/user/demo7',
+              name: 'userDemo7',
               component: AsyncComp(
-                () => import(/* webpackChunkName: "user" */ '@v/demo/demo5/index.vue'),
+                () => import(/* webpackChunkName: "user" */ '@v/demo/demo7/index.vue'),
               ),
               meta: {
                 menu: {
-                  label: 'userDemo5',
+                  label: 'userDemo7',
                 },
               },
             },

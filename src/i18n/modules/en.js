@@ -11,5 +11,8 @@ export default {
     userGroup2: 'userGroup2',
     userDemo4: 'userDemo4',
     userDemo5: 'userDemo5',
+    userDemo6: 'userDemo6',
+    userDemo7: 'userDemo7',
+    userDemo8: 'userDemo8',
   },
 }

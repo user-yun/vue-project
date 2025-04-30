@@ -13,6 +13,7 @@ const piniaPluginPersistedState = ({ store }) => {
     if (store.$id === 'project-info') {
       // 处理个别值的初始值
       patchInfo.projectInfo.loadRoute = true
+      patchInfo.projectInfo.menuItems = []
     }
     store.$patch(patchInfo)
   }

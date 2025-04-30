@@ -5,17 +5,23 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: AsyncComp(() => import(/* webpackChunkName: "login" */ '@v/default/login/index.vue')),
+    component: AsyncComp(
+      () => import(/* webpackChunkName: "login" */ '@v/default/login/index.vue'),
+    ),
   },
   {
     path: '/loading',
     name: 'loading',
-    component: AsyncComp(() => import(/* webpackChunkName: "loading" */ '@v/default/transition/Loading.vue')),
+    component: AsyncComp(
+      () => import(/* webpackChunkName: "loading" */ '@v/default/transition/Loading.vue'),
+    ),
   },
   {
     path: '/:pathMatch(.*)*',
     name: 'error',
-    component: AsyncComp(() => import(/* webpackChunkName: "pathMatch" */ '@v/default/transition/Error.vue')),
+    component: AsyncComp(
+      () => import(/* webpackChunkName: "pathMatch" */ '@v/default/transition/Error.vue'),
+    ),
   },
   {
     path: '/',
