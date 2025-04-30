@@ -4,19 +4,20 @@ import useUtils from '@u'
 import { routePaths } from './index.js'
 // 异步加载组件
 const AsyncComp = (loader) => {
-  return defineAsyncComponent({
-    // 加载函数
-    loader,
-    // 加载异步组件时使用的组件
-    loadingComponent: defineAsyncComponent(() => import('@v/default/transition/Loading.vue')),
-    // 展示加载组件前的延迟时间，默认为 200ms
-    delay: 200,
-    // 加载失败后展示的组件
-    errorComponent: defineAsyncComponent(() => import('@v/default/transition/Loading.vue')),
-    // 如果提供了一个 timeout 时间限制，并超时了
-    // 也会显示这里配置的报错组件，默认值是：Infinity
-    timeout: 3000,
-  })
+  return loader
+  // return defineAsyncComponent({
+  //   // 加载函数
+  //   loader,
+  //   // 加载异步组件时使用的组件
+  //   loadingComponent: defineAsyncComponent(() => import('@v/default/transition/Loading.vue')),
+  //   // 展示加载组件前的延迟时间，默认为 200ms
+  //   delay: 200,
+  //   // 加载失败后展示的组件
+  //   errorComponent: defineAsyncComponent(() => import('@v/default/transition/Loading.vue')),
+  //   // 如果提供了一个 timeout 时间限制，并超时了
+  //   // 也会显示这里配置的报错组件，默认值是：Infinity
+  //   timeout: 3000,
+  // })
 }
 // 加载所有文件的路由
 const loadModulesRoute = async (router) => {
@@ -143,11 +144,11 @@ const beforeEach = async (router) => {
       next(to.fullPath)
     }
   })
-  router.onError((error) => {
-    console.error('路由监听到错误:', error)
-    // 可以在这里处理错误，例如重定向到错误页面
-    // router.replace('/error-page');
-  })
+  // router.onError((error) => {
+  //   console.error('路由监听到错误:', error)
+  //   // 可以在这里处理错误，例如重定向到错误页面
+  //   // router.replace('/error-page');
+  // })
 }
 // const rView = h('router-view')
 export { AsyncComp, /**rView */ beforeEach }
