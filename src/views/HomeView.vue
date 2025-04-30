@@ -30,6 +30,9 @@ const set = () => {
       {{ userInfo.userInfo }}
     </pre>
     <pre>
+      {{ projectInfo.projectInfo }}
+    </pre>
+    <pre>
       {{ userInfo.getUserInfo }}
     </pre>
     <button @click="set">设置</button>

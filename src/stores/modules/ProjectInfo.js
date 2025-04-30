@@ -1,6 +1,7 @@
 import { reactive, computed, watch } from 'vue'
 import { defineStore } from 'pinia'
 import useUtils from '@u'
+import { setI18n } from '@i'
 export default defineStore('project-info', () => {
   const utils = useUtils()
   const projectInfo = reactive({
@@ -8,6 +9,7 @@ export default defineStore('project-info', () => {
     isDark: false,
     // 是否需要加载路由，一般在退出登录后需要重新设置为true
     loadRoute: true,
+    // 默认语言
     lang: 'zh',
     menuItems: [],
   })
@@ -19,6 +21,13 @@ export default defineStore('project-info', () => {
       // else if (!isDark && !document.documentElement.classList.contains('dark')) return
       if (isDark === document.documentElement.classList.contains('dark')) return
       document.documentElement.classList.toggle('dark')
+    },
+    { deep: true, immediate: false, flush: 'post', once: true },
+  )
+  watch(
+    () => projectInfo.lang,
+    (lang) => {
+      if (lang !== 'zh') setI18n(lang)
     },
     { deep: true, immediate: false, flush: 'post', once: true },
   )
@@ -40,38 +49,9 @@ export default defineStore('project-info', () => {
     return getComputedStyle(document.documentElement).getPropertyValue(value)
   }
   const toggleDark = () => {
-    // 执行切换主题的操作
-    let transition = document.startViewTransition(() => {
-      // 动画过渡切换主题色
-      document.documentElement.classList.toggle('dark')
-      setProjectInfo({
-        isDark: !projectInfo.isDark,
-      })
-    })
-    // document.startViewTransition 的 ready 返回一个 Promise
-    transition.ready.then(() => {
-      // 获取鼠标的坐标
-      // let { clientX, clientY } = e
-      let [clientX, clientY] = [
-        utils.getRandomInRange(0, window.innerWidth),
-        utils.getRandomInRange(0, window.innerHeight),
-      ]
-      // 计算最大半径
-      let radius = Math.max(clientX, innerWidth - clientX, clientY, innerHeight - clientY)
-      // 圆形动画扩散开始
-      document.documentElement.animate(
-        {
-          clipPath: [
-            `circle(0% at ${clientX}px ${clientY}px)`,
-            `circle(${radius}px at ${clientX}px ${clientY}px)`,
-          ],
-        },
-        // 设置时间，以及目标伪元素
-        {
-          duration: 800,
-          pseudoElement: '::view-transition-new(root)',
-        },
-      )
+    document.documentElement.classList.toggle('dark')
+    setProjectInfo({
+      isDark: !projectInfo.isDark,
     })
   }
 

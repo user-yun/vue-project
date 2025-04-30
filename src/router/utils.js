@@ -1,8 +1,9 @@
 import { defineAsyncComponent, h } from 'vue'
-import { useUserInfo, useProjectInfo } from '@s'
+import stores, { useUserInfo, useProjectInfo } from '@s'
 import useUtils from '@u'
 import { routePaths } from './index.js'
 import AIcons from '@c/AIcons'
+import i18n from '@i'
 // 异步加载组件
 const AsyncComp = (loader) => {
   return defineAsyncComponent({
@@ -63,13 +64,15 @@ const recursionHandle = (routes, authList) => {
 }
 // 递归处理菜单数据
 const copyMenuItems = (routes) => {
+  let { t } = i18n.global
   return routes.map((route) => {
     route = {
       ...route,
       ...(utils.isNeObj(route.meta?.menu)
         ? {
             ...route.meta.menu,
-            title: route.meta.menu.title || route.meta.menu.label,
+            label: t(`menu.${route.meta.menu.label || route.meta.menu.title}`),
+            title: t(`menu.${route.meta.menu.title || route.meta.menu.label}`),
             icon: utils.isNe(route.meta?.menu?.icon) ? h(AIcons(route.meta.menu.icon)) : '',
           }
         : {}),
@@ -116,7 +119,7 @@ const loadAuthMenu = (useRoute) => {
 const beforeEach = async (router) => {
   router.beforeEach(async (to, from, next) => {
     // console.log(routePaths)
-    console.log(to)
+    // console.log(to)
     // console.log(routePaths.includes(to.path))
     let userInfo = useUserInfo()
     let projectInfo = useProjectInfo()
