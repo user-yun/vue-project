@@ -1,7 +1,7 @@
 import { AsyncComp } from '../utils'
 import { RouterView } from 'vue-router'
 export default () => {
-  const layout = AsyncComp(() => import(/* webpackChunkName: "admin" */ '@v/layout/index.vue'))
+  const layout = AsyncComp(() => import(/* webpackChunkName: "user" */ '@v/layout/index.vue'))
   return [
     {
       path: '/user/group1',
@@ -70,6 +70,8 @@ export default () => {
               meta: {
                 menu: {
                   label: 'userDemo7',
+                  selectedKey: '/user/demo6', // 隐藏菜单后要高亮的左侧菜单
+                  hide: true, // 隐藏菜单
                 },
               },
             },

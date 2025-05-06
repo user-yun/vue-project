@@ -1,16 +1,12 @@
 <template>
-  <!-- <a-affix :offset-top="0" @change="affix.change" />
-  <div class="sider-menu-main" :style="main.style"> -->
   <a-menu
     mode="inline"
     :theme="menu.theme"
     :items="menu.items"
     :selectedKeys="menu.selectedKeys"
-    :inlineCollapsed="menu.inlineCollapsed"
-    @click="menu.click"
-    @openChange="menu.openChange"
+    :openKeys="menu.openKeys"
+    @click="menu.menuClick"
   />
-  <!-- </div> -->
 </template>
 
 <script setup>
@@ -47,46 +43,30 @@ let menu = reactive({
     return menu.handleItemChildren(projectInfo.getProjectInfo.menuItems)
   }),
   selectedKeys: computed(() => {
-    return [route.path]
+    return [route.meta?.menu?.selectedKey || route.path]
   }),
   findOpenKeys: () => {},
   openKeys: [],
-  inlineCollapsed: false,
-  click: ({ item, key, keyPath }) => {
+  menuClick: ({ item, key, keyPath }) => {
     router.push({
       path: key,
     })
   },
-  openChange: (openKeys) => {
-    console.log(openKeys)
-    menu.openKeys = openKeys
-  },
 })
-// 图钉固定
-// let affix = reactive({
-//   isAffixed: false,
-//   change(affixed) {
-//     affix.isAffixed = affixed
-//   },
-// })
-// 主要区域处理样式固定
-// let main = reactive({
-//   style: computed(() => {
-//     return {
-//       height: affix.isAffixed ? '100vh' : '100%',
-//       position: affix.isAffixed ? 'fixed' : 'initial',
-//     }
-//   }),
-// })
+if (route.matched) {
+  menu.openKeys = []
+  let len = route.matched.length - 1
+  for (let index = 0; index < len; index++) {
+    let item = route.matched[index]
+    menu.openKeys.push(item.path)
+  }
+}
 </script>
 
 <style lang="less" scoped>
-// .sider-menu-main {
-//   top: 0;
-//   width: 200px;
 .ant-menu {
   height: 100%;
   overflow: auto;
+  border: none;
 }
-// }
 </style>

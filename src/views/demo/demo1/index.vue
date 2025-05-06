@@ -43,6 +43,9 @@ const toggleDark = () => {
 .demo1-main {
   .a20vh {
     height: 20vh;
+    &:nth-child(1n) {
+      background: blueviolet;
+    }
     &:nth-child(2n) {
       background: red;
     }

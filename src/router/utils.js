@@ -63,23 +63,25 @@ const recursionHandle = (routes, authList) => {
 }
 // 递归处理菜单数据
 const copyMenuItems = (routes) => {
-  return routes.map((route) => {
-    route = {
-      ...route,
-      ...(utils.isNeObj(route.meta?.menu)
-        ? {
-            ...route.meta.menu,
-            label: route.meta.menu.label || route.meta.menu.title,
-            title: route.meta.menu.title || route.meta.menu.label,
-          }
-        : {}),
-      key: route.path,
-    }
-    delete route.meta
-    if (utils.isNeArr(route.children)) route.children = copyMenuItems(route.children)
-    delete route.component
-    return route
-  })
+  return routes
+    .filter((route) => !route.meta?.menu?.hide)
+    .map((route) => {
+      route = {
+        ...route,
+        ...(utils.isNeObj(route.meta?.menu)
+          ? {
+              ...route.meta.menu,
+              label: route.meta.menu.label || route.meta.menu.title,
+              title: route.meta.menu.title || route.meta.menu.label,
+            }
+          : {}),
+        key: route.path,
+      }
+      delete route.meta
+      if (utils.isNeArr(route.children)) route.children = copyMenuItems(route.children)
+      delete route.component
+      return route
+    })
 }
 // 模拟加载权限菜单
 const loadAuthMenu = (useRoute) => {
